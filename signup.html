@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amoureux — Join Us</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--rose:#ff6b9d;--blush:#ffb3c6;--peach:#ffcba4;--cream:#fff5f0;--gold:#d4af7a;--deep:#1a0a0f;--wine:#7c2d4e;--silk:#ffe4ec;--mist:#fff0f5;}
+body{font-family:'Jost',sans-serif;background:var(--cream);overflow-x:hidden;min-height:100vh;cursor:none;}
+.cursor{position:fixed;width:10px;height:10px;background:var(--rose);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:.1s;}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid var(--rose);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease;opacity:.5;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,245,240,.92);backdrop-filter:blur(20px);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--wine);letter-spacing:2px;text-decoration:none;}
+.nav-logo span{color:var(--rose);font-style:italic;}
+
+.page{display:flex;min-height:100vh;}
+
+/* LEFT PANEL */
+.left-panel{width:45%;background:linear-gradient(160deg,var(--wine),#3d0a1e 50%,#1a0a0f);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;overflow:hidden;}
+.left-panel::before{content:'';position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(255,107,157,.08);top:-100px;right:-100px;}
+.left-panel::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,107,157,.05);bottom:-80px;left:-80px;}
+.panel-hearts{position:absolute;inset:0;pointer-events:none;}
+.panel-heart{position:absolute;color:rgba(255,255,255,.04);font-size:clamp(30px,5vw,60px);animation:floatH linear infinite;}
+@keyframes floatH{0%{transform:translateY(120%) rotate(0deg);}100%{transform:translateY(-20%) rotate(20deg);}}
+.panel-content{position:relative;z-index:2;text-align:center;}
+.panel-logo{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:#fff;letter-spacing:3px;margin-bottom:8px;}
+.panel-logo span{color:var(--rose);font-style:italic;}
+.panel-tagline{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:60px;}
+.panel-heart-svg{width:120px;height:120px;margin:0 auto 48px;animation:heartbeat 1.5s ease-in-out infinite;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.panel-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;font-style:italic;color:rgba(255,255,255,.7);line-height:1.7;max-width:280px;}
+.panel-profiles{display:flex;gap:-16px;margin-top:40px;justify-content:center;}
+.panel-avatar{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:linear-gradient(135deg,var(--rose),var(--peach));display:flex;align-items:center;justify-content:center;font-size:18px;margin-left:-10px;}
+.panel-match-text{font-size:12px;color:rgba(255,255,255,.4);margin-top:12px;letter-spacing:2px;}
+
+/* RIGHT PANEL */
+.right-panel{margin-left:45%;flex:1;display:flex;align-items:center;justify-content:center;padding:120px 60px 60px;}
+.auth-box{width:100%;max-width:440px;}
+.tab-switcher{display:flex;background:rgba(255,107,157,.08);border-radius:16px;padding:4px;margin-bottom:40px;}
+.tab-btn{flex:1;padding:14px;border:none;background:none;border-radius:12px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;color:var(--wine);opacity:.5;}
+.tab-btn.active{background:#fff;color:var(--wine);opacity:1;box-shadow:0 4px 16px rgba(255,107,157,.12);}
+.auth-form{display:none;}
+.auth-form.active{display:block;animation:slideIn .4s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.auth-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--deep);margin-bottom:8px;}
+.auth-sub{font-size:13px;color:var(--wine);opacity:.6;margin-bottom:36px;line-height:1.6;}
+.form-group{margin-bottom:20px;position:relative;}
+.form-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--wine);opacity:.6;margin-bottom:8px;display:block;}
+.form-input{width:100%;padding:16px 20px;border:1.5px solid rgba(255,107,157,.15);border-radius:14px;background:#fff;font-family:'Jost',sans-serif;font-size:14px;color:var(--deep);transition:all .3s;outline:none;}
+.form-input:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(255,107,157,.08);}
+.form-input::placeholder{color:rgba(124,45,78,.3);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.gender-select{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
+.gender-opt{padding:12px;border:1.5px solid rgba(255,107,157,.15);border-radius:12px;text-align:center;cursor:pointer;transition:all .3s;font-size:13px;background:#fff;}
+.gender-opt:hover,.gender-opt.selected{border-color:var(--rose);background:rgba(255,107,157,.06);color:var(--rose);}
+.interests-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.interest-tag{padding:8px 16px;border:1.5px solid rgba(255,107,157,.15);border-radius:50px;font-size:12px;cursor:pointer;transition:all .3s;background:#fff;color:var(--wine);}
+.interest-tag.selected{background:var(--rose);border-color:var(--rose);color:#fff;}
+.submit-btn{width:100%;padding:18px;background:linear-gradient(135deg,var(--rose),var(--wine));color:#fff;border:none;border-radius:14px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;margin-top:8px;}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(255,107,157,.35);}
+.divider{display:flex;align-items:center;gap:16px;margin:24px 0;color:rgba(124,45,78,.3);font-size:12px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,107,157,.1);}
+.social-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.social-btn{padding:14px;border:1.5px solid rgba(255,107,157,.15);border-radius:12px;background:#fff;cursor:pointer;font-family:'Jost',sans-serif;font-size:13px;color:var(--wine);display:flex;align-items:center;justify-content:center;gap:8px;transition:all .3s;}
+.social-btn:hover{border-color:var(--rose);background:rgba(255,107,157,.04);}
+.forgot-link{text-align:right;margin-bottom:24px;}
+.forgot-link a{font-size:12px;color:var(--rose);text-decoration:none;letter-spacing:1px;}
+.auth-switch{text-align:center;margin-top:24px;font-size:13px;color:var(--wine);opacity:.6;}
+.auth-switch a{color:var(--rose);text-decoration:none;font-weight:500;}
+.password-toggle{position:absolute;right:16px;bottom:16px;cursor:pointer;color:var(--rose);opacity:.6;font-size:14px;}
+
+/* STEP INDICATOR */
+.steps-indicator{display:flex;gap:8px;margin-bottom:32px;}
+.step-dot{height:4px;border-radius:2px;background:rgba(255,107,157,.15);flex:1;transition:all .4s;}
+.step-dot.done{background:var(--rose);}
+.step-dot.active{background:var(--rose);box-shadow:0 0 12px rgba(255,107,157,.4);}
+
+/* SIGNUP STEPS */
+.signup-step{display:none;}
+.signup-step.active{display:block;animation:slideIn .4s ease;}
+.step-nav{display:flex;gap:12px;margin-top:24px;}
+.btn-next,.btn-back{padding:16px 32px;border-radius:12px;border:none;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;}
+.btn-next{background:linear-gradient(135deg,var(--rose),var(--wine));color:#fff;flex:1;}
+.btn-next:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,157,.3);}
+.btn-back{background:rgba(255,107,157,.08);color:var(--wine);}
+
+/* SUCCESS */
+.success-overlay{display:none;position:fixed;inset:0;background:rgba(26,10,15,.9);z-index:200;align-items:center;justify-content:center;flex-direction:column;text-align:center;}
+.success-overlay.show{display:flex;animation:fadeIn .5s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.success-heart{font-size:80px;animation:successPulse .8s ease infinite alternate;}
+@keyframes successPulse{from{transform:scale(1);}to{transform:scale(1.15);}}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:48px;color:#fff;margin:24px 0 16px;}
+.success-sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:40px;}
+.success-btn{padding:16px 48px;background:linear-gradient(135deg,var(--rose),var(--wine));color:#fff;border-radius:50px;text-decoration:none;font-size:13px;letter-spacing:2px;text-transform:uppercase;}
+
+@media(max-width:768px){
+.left-panel{display:none;}
+.right-panel{margin-left:0;padding:100px 24px 40px;}
+.form-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">Amour<span>eux</span></a>
+</nav>
+
+<div class="page">
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="panel-hearts" id="panelHearts"></div>
+    <div class="panel-content">
+      <div class="panel-logo">Amour<span>eux</span></div>
+      <div class="panel-tagline">Find Your Forever</div>
+      <div class="panel-heart-svg">
+        <svg viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="hg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ff6b9d"/><stop offset="100%" stop-color="#7c2d4e"/></linearGradient></defs>
+          <path d="M50 85 C50 85 5 55 5 27 C5 12 17 2 30 2 C38 2 45 7 50 13 C55 7 62 2 70 2 C83 2 95 12 95 27 C95 55 50 85 50 85Z" fill="url(#hg2)" opacity=".9"/>
+          <path d="M50 85 C50 85 5 55 5 27 C5 12 17 2 30 2 C38 2 45 7 50 13 C55 7 62 2 70 2 C83 2 95 12 95 27 C95 55 50 85 50 85Z" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="panel-quote">"Every great love story begins with a single brave moment."</div>
+      <div class="panel-profiles">
+        <div class="panel-avatar">👩</div>
+        <div class="panel-avatar">👨</div>
+        <div class="panel-avatar">👩</div>
+        <div class="panel-avatar">👨</div>
+      </div>
+      <div class="panel-match-text">2M+ Hearts Connected</div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="auth-box">
+      <div class="tab-switcher">
+        <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
+        <button class="tab-btn" onclick="switchTab('signup')">Create Account</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div class="auth-form active" id="loginForm">
+        <h2 class="auth-title">Welcome Back ♥</h2>
+        <p class="auth-sub">Sign in to continue your love story</p>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="loginPass" placeholder="••••••••">
+          <span class="password-toggle" onclick="togglePass('loginPass')">👁</span>
+        </div>
+        <div class="forgot-link"><a href="#">Forgot password?</a></div>
+        <button class="submit-btn" onclick="doLogin()">Sign In to Amoureux</button>
+        <div class="divider">or continue with</div>
+        <div class="social-btns">
+          <button class="social-btn">🌐 Google</button>
+          <button class="social-btn">🍎 Apple</button>
+        </div>
+        <div class="auth-switch">Don't have an account? <a href="#" onclick="switchTab('signup')">Join free</a></div>
+      </div>
+
+      <!-- SIGNUP MULTI-STEP -->
+      <div class="auth-form" id="signupForm">
+        <div class="steps-indicator">
+          <div class="step-dot active" id="sd1"></div>
+          <div class="step-dot" id="sd2"></div>
+          <div class="step-dot" id="sd3"></div>
+          <div class="step-dot" id="sd4"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="signup-step active" id="step1">
+          <h2 class="auth-title">Begin Your Story</h2>
+          <p class="auth-sub">Tell us a little about yourself</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-input" placeholder="Your name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-input" placeholder="Family name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-input" id="signupPass" placeholder="Create a strong password">
+            <span class="password-toggle" onclick="togglePass('signupPass')">👁</span>
+          </div>
+          <div class="step-nav">
+            <button class="btn-next" onclick="nextStep(1)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="signup-step" id="step2">
+          <h2 class="auth-title">About You</h2>
+          <p class="auth-sub">Help us find your perfect match</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Birthday</label>
+              <input type="date" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Location</label>
+              <input type="text" class="form-input" placeholder="Your city">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">I identify as</label>
+            <div class="gender-select">
+              <div class="gender-opt selected" onclick="selectGender(this)">👩 Woman</div>
+              <div class="gender-opt" onclick="selectGender(this)">👨 Man</div>
+              <div class="gender-opt" onclick="selectGender(this)">🌈 Non-binary</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Looking For</label>
+            <div class="gender-select">
+              <div class="gender-opt" onclick="selectLooking(this)">Women</div>
+              <div class="gender-opt selected" onclick="selectLooking(this)">Men</div>
+              <div class="gender-opt" onclick="selectLooking(this)">Everyone</div>
+            </div>
+          </div>
+          <div class="step-nav">
+            <button class="btn-back" onclick="prevStep(2)">← Back</button>
+            <button class="btn-next" onclick="nextStep(2)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="signup-step" id="step3">
+          <h2 class="auth-title">Your Passions</h2>
+          <p class="auth-sub">Select interests that define you</p>
+          <div class="form-group">
+            <div class="interests-grid" id="interestGrid">
+              <div class="interest-tag" onclick="toggleInterest(this)">🎵 Music</div>
+              <div class="interest-tag selected" onclick="toggleInterest(this)">🎬 Movies</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">🍳 Cooking</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">✈️ Travel</div>
+              <div class="interest-tag selected" onclick="toggleInterest(this)">📚 Books</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">🏋️ Fitness</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">🎨 Art</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">🐾 Pets</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">🌿 Nature</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">☕ Coffee</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">🎮 Gaming</div>
+              <div class="interest-tag" onclick="toggleInterest(this)">💃 Dancing</div>
+            </div>
+          </div>
+          <div class="step-nav">
+            <button class="btn-back" onclick="prevStep(3)">← Back</button>
+            <button class="btn-next" onclick="nextStep(3)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="signup-step" id="step4">
+          <h2 class="auth-title">Your Photo</h2>
+          <p class="auth-sub">Add a profile photo to make your first impression unforgettable</p>
+          <div class="form-group" style="text-align:center;">
+            <div id="photoPreview" style="width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,rgba(255,107,157,.15),rgba(255,203,164,.2));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:3px dashed rgba(255,107,157,.3);cursor:pointer;font-size:48px;overflow:hidden;" onclick="document.getElementById('photoInput').click()">
+              📷
+            </div>
+            <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="previewPhoto(this)">
+            <p style="font-size:13px;color:rgba(124,45,78,.5);">Tap to upload your photo</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Bio</label>
+            <textarea class="form-input" rows="3" placeholder="Tell potential matches something beautiful about yourself..." style="resize:none;"></textarea>
+          </div>
+          <div class="step-nav">
+            <button class="btn-back" onclick="prevStep(4)">← Back</button>
+            <button class="btn-next" onclick="completeSignup()">Join Amoureux ♥</button>
+          </div>
+        </div>
+
+        <div class="auth-switch">Already have an account? <a href="#" onclick="switchTab('login')">Sign in</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-heart" id="successHeart">♥</div>
+  <h2 class="success-title">Welcome to Amoureux!</h2>
+  <p class="success-sub">Your love story begins now. Let's find your perfect match.</p>
+  <a href="discover.html" class="success-btn">Discover Matches ♥</a>
+</div>
+
+<script>
+// Cursor
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},80);});
+
+// Panel hearts
+const ph=document.getElementById('panelHearts');
+for(let i=0;i<12;i++){const h=document.createElement('div');h.style.cssText=`position:absolute;left:${Math.random()*100}%;bottom:0;font-size:${20+Math.random()*30}px;animation:floatH ${8+Math.random()*8}s ${-Math.random()*8}s linear infinite;color:rgba(255,255,255,.05);`;h.textContent='♥';ph.appendChild(h);}
+
+let currentStep=1;
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',(tab==='login'&&i===0)||(tab==='signup'&&i===1)));
+  document.getElementById('loginForm').classList.toggle('active',tab==='login');
+  document.getElementById('signupForm').classList.toggle('active',tab==='signup');
+}
+function nextStep(s){
+  document.getElementById('step'+s).classList.remove('active');
+  document.getElementById('step'+(s+1)).classList.add('active');
+  currentStep=s+1;
+  updateDots();
+}
+function prevStep(s){
+  document.getElementById('step'+s).classList.remove('active');
+  document.getElementById('step'+(s-1)).classList.add('active');
+  currentStep=s-1;
+  updateDots();
+}
+function updateDots(){
+  for(let i=1;i<=4;i++){
+    const d=document.getElementById('sd'+i);
+    d.className='step-dot'+(i<currentStep?' done':i===currentStep?' active':'');
+  }
+}
+function selectGender(el){el.closest('.gender-select').querySelectorAll('.gender-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');}
+function selectLooking(el){el.closest('.gender-select').querySelectorAll('.gender-opt').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');}
+function toggleInterest(el){el.classList.toggle('selected');}
+function togglePass(id){const i=document.getElementById(id);i.type=i.type==='password'?'text':'password';}
+function previewPhoto(input){
+  if(input.files&&input.files[0]){
+    const r=new FileReader();r.onload=e=>{
+      const p=document.getElementById('photoPreview');
+      p.innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;">`;
+    };r.readAsDataURL(input.files[0]);
+  }
+}
+function completeSignup(){
+  const overlay=document.getElementById('successOverlay');
+  overlay.classList.add('show');
+  const h=document.getElementById('successHeart');
+  let scale=1,growing=true;
+  setInterval(()=>{scale+=growing?.02:-.02;if(scale>1.2)growing=false;if(scale<1)growing=true;h.style.transform=`scale(${scale})`;},30);
+}
+function doLogin(){window.location.href='discover.html';}
+</script>
+</body>
+</html>
