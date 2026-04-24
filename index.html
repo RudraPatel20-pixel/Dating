@@ -57,10 +57,32 @@ h1 em{font-style:italic;color:var(--rose);}
 .btn-outline{border:1.5px solid var(--rose);color:var(--rose);padding:18px 48px;border-radius:50px;font-size:13px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;}
 .btn-outline:hover{background:rgba(255,107,157,.08);transform:translateY(-3px);}
 
-/* HEART LOADER */
+/* HEART LOADER (hero decorative) */
 .heart-loader{position:relative;width:80px;height:80px;margin:0 auto 60px;}
 .heart-loader svg{width:100%;height:100%;animation:heartbeat 1.2s ease-in-out infinite;}
 @keyframes heartbeat{0%,100%{transform:scale(1);}14%{transform:scale(1.2);}28%{transform:scale(1);}42%{transform:scale(1.15);}70%{transform:scale(1);}}
+
+/* PAGE LOADING SCREEN */
+#page-loader{
+  position:fixed;inset:0;z-index:99999;
+  background:var(--cream);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  gap:20px;
+  transition:opacity 0.6s ease, visibility 0.6s ease;
+}
+#page-loader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.page-loader-heart svg{animation:loaderHeartBeat 1s ease infinite;}
+@keyframes loaderHeartBeat{
+  0%,100%{transform:scale(1);}
+  25%{transform:scale(1.25);}
+  50%{transform:scale(1);}
+  75%{transform:scale(1.15);}
+}
+.page-loader-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-style:italic;color:var(--rose);
+  letter-spacing:3px;
+}
 
 /* FLOATING PROFILES */
 .hero-profiles{position:absolute;right:5%;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:20px;opacity:.9;}
@@ -158,6 +180,23 @@ nav{padding:16px 24px;}
 </style>
 </head>
 <body>
+
+<!-- PAGE LOADING SCREEN -->
+<div id="page-loader">
+  <div class="page-loader-heart">
+    <svg width="80" height="80" viewBox="0 0 100 100">
+      <defs>
+        <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ff6b9d"/>
+          <stop offset="100%" stop-color="#7c2d4e"/>
+        </linearGradient>
+      </defs>
+      <path d="M50 85 C50 85 10 58 10 32 C10 18 22 8 35 12 C42 14 47 20 50 26 C53 20 58 14 65 12 C78 8 90 18 90 32 C90 58 50 85 50 85 Z" fill="url(#loaderGrad)"/>
+    </svg>
+  </div>
+  <span class="page-loader-text">Finding your perfect match…</span>
+</div>
+
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
@@ -415,6 +454,13 @@ setInterval(()=>showTest((idx+1)%tests.length),5000);
 // Mobile nav
 document.getElementById('navToggle').addEventListener('click',()=>{
   document.getElementById('navLinks').classList.toggle('open');
+});
+
+// Page loader
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('page-loader').classList.add('hidden');
+  }, 1500);
 });
 
 // Scroll reveal
